@@ -1,0 +1,15 @@
+{
+    "name": "bruensicke/startupworkshop",
+    "description": "powers startup-workshop.de",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "d1rk",
+            "email": "d1rk@gmx.de"
+        }
+    ],
+    "require": {
+        "UnionOfRAD/lithium": "0.11"
+    },
+    "minimum-stability": "dev"
+}
