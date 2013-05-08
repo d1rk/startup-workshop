@@ -4,7 +4,8 @@ use lithium\core\Libraries;
 use lithium\action\Dispatcher;
 use lithium\action\Request;
 
-define('LITHIUM_LIBRARY_PATH', __DIR__ . '/libraries');
+define('LITHIUM_APP_PATH', dirname(__DIR__));
+define('LITHIUM_LIBRARY_PATH', LITHIUM_APP_PATH . '/libraries');
 
 if (!include LITHIUM_LIBRARY_PATH . '/lithium/core/Libraries.php') {
 	$message  = "Lithium core could not be found.  Check the value of LITHIUM_LIBRARY_PATH in ";
@@ -15,7 +16,7 @@ if (!include LITHIUM_LIBRARY_PATH . '/lithium/core/Libraries.php') {
 
 Libraries::add('lithium');
 
-include 'routes.php';
-include 'filters.php';
+include LITHIUM_APP_PATH . '/routes.php';
+include LITHIUM_APP_PATH . '/filters.php';
 
 echo Dispatcher::run(new Request);

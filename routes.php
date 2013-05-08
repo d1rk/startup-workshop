@@ -6,13 +6,13 @@ use lithium\net\http\Media;
 use lithium\net\http\Router;
 
 Router::connect('/', array(), function($request) {
-	$content = file_get_contents(dirname(__FILE__) . '/home.html');
+	$content = file_get_contents(LITHIUM_APP_PATH . '/home.html');
 	$url = Router::match('/', $request, array('absolute' => true));
 	return new Response(array('body' => str_replace('#url#', $url, $content)));
 });
 
 Router::connect('/save', array('http:method' => "POST"), function($request) {
-	include 'models/Users.php';
+	include LITHIUM_APP_PATH . '/models/Users.php';
 	$user = Users::create();
 	$success = $user->save($request->data);
 	$user = $user->data();
