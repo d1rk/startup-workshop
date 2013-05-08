@@ -173,21 +173,22 @@
 		</div>
 
 	</div>
-<script src="#url#js/jquery.js"></script>
+<script src="#url#js/head.js"></script>
 <script type="text/javascript">
 var app = app || {};
 app.url = '#url#save';
 app.init = function() {
 	$('body').on('click', 'form a.btn', app.submit);
 };
-app.success = function() {
+app.success = function(res) {
+	if (!res.success) {
+		return app.error(res);
+	}
 	$('label').html('gespeichert. Danke!');
 };
-app.error = function() {
+app.error = function(res) {
 	$('label').html('Mist! Irgendwas ging schief.');
-};
-app.complete = function() {
-	$('form input').attr('disabled');
+	$('form input').removeAttr('disabled');
 };
 app.submit = function(e) {
 	$('form input').attr('disabled', 'disabled');
@@ -195,14 +196,11 @@ app.submit = function(e) {
 	data.email = $('form input').val();
 	var req = $.post(app.url, data)
 		.success(app.success)
-		.error(app.error)
-		.complete(app.complete);
+		.error(app.error);
 	$('label').html('wird gesendet...');
 	return false;
 };
-$().ready(function() {
-	app.init();
-});
+head.js("#url#js/jquery.js", app.init);
 </script>
 </body>
 </html>
