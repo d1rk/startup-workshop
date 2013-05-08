@@ -5,6 +5,7 @@ class Users extends \lithium\data\Model {
 	protected $_meta = array(
 		'connection' => false,
 		'initialized' => true,
+		'locked' => true,
 	);
 
 	/**

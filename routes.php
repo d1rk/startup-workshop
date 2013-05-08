@@ -2,18 +2,22 @@
 
 use lithium\core\Libraries;
 use lithium\action\Response;
+use lithium\net\http\Media;
 use lithium\net\http\Router;
 
 Router::connect('/', array(), function($request) {
+	$content = file_get_contents(dirname(__FILE__) . '/home.html');
 	$url = Router::match('/', $request, array('absolute' => true));
-	return new Response(array('body' => str_replace('#url#', $url, file_get_contents('home.html'))));
+	return new Response(array('body' => str_replace('#url#', $url, $content)));
 });
 
-Router::connect('/', array('http:method' => "POST"), function($request) {
+Router::connect('/save', array('http:method' => "POST"), function($request) {
 	include 'models/Users.php';
 	$user = Users::create();
 	$success = $user->save($request->data);
-	return new Response(array('type' => 'json', 'body' => compact('user', 'success')));
+	$user = $user->data();
+	$response = new Response(array('type' => 'json'));
+	return Media::render($response, compact('user', 'success'));
 });
 
 Router::connect('/{:args}', array(), function($request) {

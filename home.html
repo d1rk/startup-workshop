@@ -170,27 +170,34 @@
 				</div>
 			</div>
 
-
 		</div>
 
 	</div>
 <script src="#url#js/jquery.js"></script>
 <script type="text/javascript">
 var app = app || {};
-app.url = '#url#';
+app.url = '#url#save';
 app.init = function() {
 	$('body').on('click', 'form a.btn', app.submit);
+};
+app.success = function() {
+	$('label').html('gespeichert. Danke!');
+};
+app.error = function() {
+	$('label').html('Mist! Irgendwas ging schief.');
+};
+app.complete = function() {
+	$('form input').attr('disabled');
 };
 app.submit = function(e) {
 	$('form input').attr('disabled', 'disabled');
 	data = {};
 	data.email = $('form input').val();
-	console.log(data);
-	var req = $.post(app.url, data);
-		// .success(tools.success)
-		// .error(tools.error)
-		// .complete(tools.render);
-
+	var req = $.post(app.url, data)
+		.success(app.success)
+		.error(app.error)
+		.complete(app.complete);
+	$('label').html('wird gesendet...');
 	return false;
 };
 $().ready(function() {
